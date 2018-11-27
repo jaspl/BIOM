@@ -9,31 +9,30 @@ import com.example.jan.recognitionusingsensordata.MainActivity;
 public class GravitySensorController {
     String movementSign;
     MotionWatcher watcher=MotionWatcher.getInstance();
-
-    public void setWasSet(boolean wasSet) {
-        this.wasSet = wasSet;
-    }
-
-    boolean wasSet;
+    boolean wasSet1;
 
 
-    public void getGravityGesture(SensorEvent event) {
+    public void getGravityGesture(SensorEvent event, boolean canMakeAnotherMovement) {
         float x = event.values[0];
         float y = event.values[1];
-        detectPosition(x,y);
-        Log.d("info",String.valueOf(wasSet));
-
+        if (canMakeAnotherMovement) {
+            detectPosition(x, y);
+        }
     }
+
     public void detectPosition(float x,float y){
 
-        if ((x>7||x<-7)&&!wasSet){
-            wasSet = true;
+        if ((x>7||x<-7)&&wasSet1){
+            wasSet1 = false;
             watcher.setActualMovement("HORIZONTAL");
-        }else if ((y>7||y<-7)&&!wasSet){
-            wasSet=true;
+        }
+        if ((y>7||y<-7)&&wasSet1){
+            wasSet1=false;
             watcher.setActualMovement("VERTICAL");
-        }else {
+        }
+        if((x<7&&x>-7)&&(y<7&&y>-7))  {
             movementSign= null;
+            wasSet1 = true;
 
         }
     }

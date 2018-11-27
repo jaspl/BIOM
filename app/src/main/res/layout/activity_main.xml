@@ -14,8 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:text="No movement!" />
-
+        android:text="No movement!"
+        android:gravity="center"/>
+<Button
+    android:id="@+id/delete"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/butt_shape"
+    android:text="usuń ostatni ruch"/>
     <TextView
         android:id="@+id/usernameText"
         android:layout_width="wrap_content"
@@ -40,5 +46,9 @@
         android:background="@drawable/butt_shape"
 
         android:text="NewUser" />
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
