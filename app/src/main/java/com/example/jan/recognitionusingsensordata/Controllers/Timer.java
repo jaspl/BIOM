@@ -1,46 +1,71 @@
 package com.example.jan.recognitionusingsensordata.Controllers;
 
 import android.os.CountDownTimer;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.example.jan.recognitionusingsensordata.MainActivity;
 
-public class Timer {
-    AccelerometrController accel;
-    GravitySensorController gravitySensorControlle;
-    private static  Timer instance;
+/**
+ * Singleton measures time between gestures
+ */
 
-    private Timer(){
+public class Timer {
+
+    private static Timer instance;
+    TextView timerText;
+    public boolean canMakeAnotherMovement = true;
+
+    private Timer() {
 
     }
-    public static Timer getInstance(){
-        if (instance==null){
-            instance= new Timer();
+
+    public static Timer getInstance() {
+        if (instance == null) {
+            instance = new Timer();
         }
         return instance;
     }
-    CountDownTimer timer = new CountDownTimer(1000,10) {
+
+    CountDownTimer timer = new CountDownTimer(1500, 10) {
         @Override
         public void onTick(long l) {
-
+            if (timerText != null) {
+                timerText.setText(l / 1000 + "." + l % 1000);
+            }
         }
 
         @Override
         public void onFinish() {
-
             stopTimer();
         }
     };
-    public void startTimer(){
-        timer.start();
+
+    /**
+     * Method starts timer
+     */
+    public void startTimer() {
+        if (canMakeAnotherMovement) {
+            timer.start();
+            canMakeAnotherMovement = false;
+        }
     }
-    public void getAccelAndGraavity(AccelerometrController accel,GravitySensorController gravitySensorController){
-        this.gravitySensorControlle=gravitySensorController;
-        this.accel=accel;
+
+    /**
+     * Method gets TevtView
+     * @param timerText
+     */
+    public void getTimerTextView(TextView timerText) {
+        this.timerText = timerText;
     }
-    public void stopTimer(){
-        if (gravitySensorControlle!=null)
-        gravitySensorControlle.setWasSet(false);
+
+    /**
+     * Method stops timer
+     */
+    public void stopTimer() {
         timer.cancel();
+        canMakeAnotherMovement = true;
+        timerText.setText("Make another move!");
     }
 
 }

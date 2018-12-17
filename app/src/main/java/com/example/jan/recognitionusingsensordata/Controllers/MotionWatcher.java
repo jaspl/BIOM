@@ -1,8 +1,10 @@
 package com.example.jan.recognitionusingsensordata.Controllers;
 
+/**
+ * Singleton Listener checking movement change
+ */
 public class MotionWatcher {
     private MovementListener listener;
-    String actualMovement;
     private static MotionWatcher instance;
 
     public static MotionWatcher getInstance(){
@@ -11,12 +13,8 @@ public class MotionWatcher {
         }
         return instance;
     }
-    public String getActualMovement() {
-        return actualMovement;
-    }
 
     public void setActualMovement(String actualMovement) {
-        this.actualMovement = actualMovement;
         if (listener!=null){
             listener.onMovementChanged(actualMovement);
         }
