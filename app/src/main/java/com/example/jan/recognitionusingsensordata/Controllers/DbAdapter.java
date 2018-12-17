@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
+/**
+ * Manage the database
+ */
 public class DbAdapter extends SQLiteOpenHelper {
     private static final int DB_VERSION=1;
     private static final String DB_NAME="dbname";
@@ -32,6 +35,17 @@ public class DbAdapter extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
+
+    /**
+     * Method inserts data to database
+     * @param username
+     * @param movement1
+     * @param movement2
+     * @param movement3
+     * @param movement4
+     * @param movement5
+     * @return
+     */
     public boolean insertData(String username, String movement1, String movement2, String movement3, String movement4, String movement5){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -48,6 +62,11 @@ public class DbAdapter extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    /**
+     * Method gets values froma database
+     * @return
+     */
     public Cursor getData(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from "+ TABLE_NAME,null);

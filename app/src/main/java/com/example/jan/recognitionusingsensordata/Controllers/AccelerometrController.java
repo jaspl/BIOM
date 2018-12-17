@@ -11,6 +11,9 @@ import java.util.List;
 
 import static java.lang.StrictMath.abs;
 
+/**
+ * Manage accelerometr data
+ */
 public class AccelerometrController {
     boolean up = false;
     boolean down = false;
@@ -27,6 +30,12 @@ public class AccelerometrController {
     List<Integer> gestureOrder = new ArrayList<>();
     MotionWatcher watcher = MotionWatcher.getInstance();
 
+    /**
+     * Method gest data from accelerometr
+     * @param event
+     * @param canMakeAnotherMovement
+     */
+
     public void getAccelerometr(SensorEvent event, boolean canMakeAnotherMovement) {
         float x = event.values[0];
         float y = event.values[1];
@@ -37,6 +46,11 @@ public class AccelerometrController {
             getGesture(border);
         }
     }
+
+    /**
+     * Method checks if aaccelerometr activity is lover than border
+     * @param accelerometrActivity
+     */
 
     private void getGesture(float accelerometrActivity) {
         show();
@@ -51,6 +65,12 @@ public class AccelerometrController {
         resetGestureOsrer();
     }
 
+    /**
+     * Method sets borders to detect gestures
+     * @param x
+     * @param y
+     * @param z
+     */
     private void accelerometrGestureRekognision(float x, float y, float z) {
         float rightLeftBorer;
         float upDownBorder;
@@ -85,6 +105,9 @@ public class AccelerometrController {
         singleGestureRecognition(x, y, z, rightLeftBorer, upDownBorder, farwardBackwardBorder);
     }
 
+    /**
+     * Method deteccts gestures
+     */
     private void gestureRekognition() {
         if (gestureOrder.size() >= 2) {
             lastUpdate = System.currentTimeMillis();
@@ -114,6 +137,15 @@ public class AccelerometrController {
         }
     }
 
+    /**
+     * Method recognize first movement detected by accelerometr
+     * @param x
+     * @param y
+     * @param z
+     * @param rightLeftBorer
+     * @param upDownBorder
+     * @param farwardBackwardBorder
+     */
     private void singleGestureRecognition(float x, float y, float z, float rightLeftBorer,
                                           float upDownBorder, float farwardBackwardBorder) {
         if (abs(x) > abs(y) && abs(x) > abs(z)) {
@@ -155,12 +187,16 @@ public class AccelerometrController {
         }
     }
 
+    /**
+     * Method resets gestureOrder list
+     */
     private void resetGestureOsrer() {
         if (gestureOrder.size() > 2) {
             resetFlags();
             gestureOrder.clear();
         }
     }
+
 
     private void resetValues() {
         valueOfMaxBackward = 0;
@@ -169,6 +205,9 @@ public class AccelerometrController {
         valueOfBegin = 0;
     }
 
+    /**
+     * Method resets all booleans
+     */
     private void resetFlags() {
         up = false;
         down = false;
@@ -178,6 +217,9 @@ public class AccelerometrController {
         right = false;
     }
 
+    /**
+     * Method shows the contents of the list
+     */
     private void show() {
         for (int i = 0; i < gestureOrder.size(); i++) {
             Log.d("show", String.valueOf(gestureOrder));

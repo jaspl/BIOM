@@ -6,11 +6,14 @@ import android.widget.TextView;
 
 import com.example.jan.recognitionusingsensordata.MainActivity;
 
+/**
+ * Singleton measures time between gestures
+ */
+
 public class Timer {
 
     private static Timer instance;
     TextView timerText;
-    float count = 0;
     public boolean canMakeAnotherMovement = true;
 
     private Timer() {
@@ -28,8 +31,7 @@ public class Timer {
         @Override
         public void onTick(long l) {
             if (timerText != null) {
-                count += 0.01f;
-                timerText.setText("0." + l);
+                timerText.setText(l / 1000 + "." + l % 1000);
             }
         }
 
@@ -39,6 +41,9 @@ public class Timer {
         }
     };
 
+    /**
+     * Method starts timer
+     */
     public void startTimer() {
         if (canMakeAnotherMovement) {
             timer.start();
@@ -46,14 +51,21 @@ public class Timer {
         }
     }
 
-    public void getAccelAndGraavity(TextView timerText) {
+    /**
+     * Method gets TevtView
+     * @param timerText
+     */
+    public void getTimerTextView(TextView timerText) {
         this.timerText = timerText;
     }
 
+    /**
+     * Method stops timer
+     */
     public void stopTimer() {
         timer.cancel();
         canMakeAnotherMovement = true;
-        timerText.setText("wykonaj kolejny ruch");
+        timerText.setText("Make another move!");
     }
 
 }
